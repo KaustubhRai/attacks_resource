@@ -65,6 +65,3 @@
   * [Nginx Common Bugs](Technologies/Nginx.md)
   * [WordPress Common Bugs](Technologies/WordPress.md)
   * [Zend Common Bugs](Technologies/Zend.md)
-* [CVEs](CVEs/README.md)
-  * [2021](CVEs/2021/README.md)
-    * [CVE-2021-36873](CVEs/2021/CVE-2021-36873.md)
